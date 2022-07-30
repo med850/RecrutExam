@@ -4,7 +4,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,9 +19,11 @@ import com.example.RecrutExam.Entity.Role;
 import com.example.RecrutExam.Entity.User;
 import com.example.RecrutExam.Entity.UserRole;
 import com.example.RecrutExam.Services.UserService;
+import com.example.RecrutExam.Helper.UserNotFoundException;
 
 @RestController
 @RequestMapping("/user")
+@CrossOrigin("*")
 public class UserController {
 
 	@Autowired
@@ -63,6 +68,16 @@ public class UserController {
 	public void deleteUser(@PathVariable("id") Long id) {
 		
 		this.userService.deleteUser(id);
+		
+	}
+	
+	
+	
+	@ExceptionHandler(UserNotFoundException.class)
+	public ResponseEntity<?>exceptionHandler(UserNotFoundException ex){
+		
+		
+	return null;	
 		
 	}
 	
