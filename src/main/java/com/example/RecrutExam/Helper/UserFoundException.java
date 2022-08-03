@@ -1,13 +1,14 @@
 package com.example.RecrutExam.Helper;
 
-public class UserNotFoundException extends Exception{
+public class UserFoundException extends Exception{
 
+	
 	
 
 	
-	public UserNotFoundException() {
+	public UserFoundException() {
 		
-		super("username déja existe dans la base de donnée ");
+		super("username déja existe pas dans la base de donnée ");
 		
 	}
 	
@@ -20,11 +21,12 @@ public class UserNotFoundException extends Exception{
 	
 	
 	
-	public UserNotFoundException(String message) {
+	public UserFoundException(String message) {
 		
 			super(message);
 		
 	}
+	
 	
 	
 }

@@ -5,6 +5,7 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -19,6 +20,7 @@ import com.example.RecrutExam.Entity.Role;
 import com.example.RecrutExam.Entity.User;
 import com.example.RecrutExam.Entity.UserRole;
 import com.example.RecrutExam.Services.UserService;
+import com.example.RecrutExam.Helper.UserFoundException;
 import com.example.RecrutExam.Helper.UserNotFoundException;
 
 @RestController
@@ -30,8 +32,20 @@ public class UserController {
 	private UserService userService;
 	
 	
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	
+	
 	@PostMapping("/")
 	public User createUser(@RequestBody User user) throws Exception {
+		
+		
+		
+		
+		user.setProfile("default.png");
+		
+		
+		user.setPassword(this.bCryptPasswordEncoder.encode(user.getPassword()));
 		
 		Set<UserRole>roles = new HashSet<>();
 		
@@ -73,8 +87,8 @@ public class UserController {
 	
 	
 	
-	@ExceptionHandler(UserNotFoundException.class)
-	public ResponseEntity<?>exceptionHandler(UserNotFoundException ex){
+	@ExceptionHandler(UserFoundException.class)
+	public ResponseEntity<?>exceptionHandler(UserFoundException ex){
 		
 		
 	return null;	

@@ -1,5 +1,7 @@
 package com.example.RecrutExam.Controller;
 
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -7,6 +9,8 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,10 +18,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.RecrutExam.Config.JwtUtils;
 import com.example.RecrutExam.Entity.JwtRequest;
 import com.example.RecrutExam.Entity.JwtResponse;
+import com.example.RecrutExam.Entity.User;
 import com.example.RecrutExam.Helper.UserNotFoundException;
 import com.example.RecrutExam.Services.Impl.UserDetailsServiceImp;
 
 @RestController
+@CrossOrigin("*")
 public class AuthenticateController {
 
 	@Autowired
@@ -87,5 +93,18 @@ public class AuthenticateController {
 		
 		
 	}
+	
+	
+	@GetMapping("/current-user")
+	public User getCurrentUser(Principal principal) {
+		
+		return ((User)this.userDetailsService.loadUserByUsername(principal.getName()));
+		
+		
+		
+	}
+	
+	
+	
 	
 }

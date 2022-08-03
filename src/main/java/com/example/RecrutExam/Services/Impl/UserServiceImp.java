@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.RecrutExam.Entity.User;
 import com.example.RecrutExam.Entity.UserRole;
+import com.example.RecrutExam.Helper.UserFoundException;
 import com.example.RecrutExam.Repositories.RoleRepository;
 import com.example.RecrutExam.Repositories.UserRepository;
 import com.example.RecrutExam.Services.UserService;
@@ -33,7 +34,7 @@ public class UserServiceImp implements UserService{
 		if(local!=null) {
 			
 			System.out.println("User déja existe");
-			throw new Exception("User déja existe");
+			throw new UserFoundException();
 			
 		}else {
 			
