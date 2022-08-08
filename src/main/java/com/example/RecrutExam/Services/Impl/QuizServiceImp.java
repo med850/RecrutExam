@@ -1,11 +1,13 @@
 package com.example.RecrutExam.Services.Impl;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.RecrutExam.Entity.Examen.Categorie;
 import com.example.RecrutExam.Entity.Examen.Quiz;
 import com.example.RecrutExam.Repositories.QuizRepository;
 import com.example.RecrutExam.Services.QuizService;
@@ -53,6 +55,24 @@ public class QuizServiceImp implements QuizService{
 		
 		this.quizRepo.deleteById(id);
 		
+	}
+
+	@Override
+	public List<Quiz> getQuizOfCategorie(Categorie categorie) {
+		
+		return quizRepo.findByCategorie(categorie);
+	}
+
+	@Override
+	public List<Quiz> getActiveQuizzes() {
+		
+		return this.quizRepo.findByActive(true);
+	}
+
+	@Override
+	public List<Quiz> getAciveQuizzesOfCategorie(Categorie c) {
+		
+		return this.quizRepo.findByCategorieAndActive(c, true);
 	}
 
 }

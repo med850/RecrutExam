@@ -1,5 +1,7 @@
 package com.example.RecrutExam.Controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.RecrutExam.Entity.Examen.Categorie;
 import com.example.RecrutExam.Entity.Examen.Quiz;
 import com.example.RecrutExam.Services.QuizService;
 
@@ -66,6 +69,33 @@ public class QuizController {
 	public void delete(@PathVariable("id") Long id) {
 		
 		this.quizService.deleteQuiz(id);
+		
+	}
+	
+	
+	
+	@GetMapping("/categorie/{id}")
+	public List<Quiz>getQuizOfCat(@PathVariable("id") Long id){
+		Categorie categorie = new Categorie();
+		categorie.setId(id);
+		return this.quizService.getQuizOfCategorie(categorie);
+	}
+	
+	
+	
+	@GetMapping("/active")
+	public List<Quiz>getActiveQuiz(){
+		return this.quizService.getActiveQuizzes();
+	}
+	
+	
+	@GetMapping("/categorie/active/id")
+	public List<Quiz>getActiveQuizzes(@PathVariable("id") Long id){
+		
+		
+		Categorie categorie = new Categorie();
+		categorie.setId(id);
+		return this.quizService.getAciveQuizzesOfCategorie(categorie);
 		
 	}
 	
